@@ -31,4 +31,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
+    
+});
+
+Route::get('rota-teste', function () {
+    return response()->json([
+        'message' => 'deu certo parceiro!'
+    ]);
 });
