@@ -77,7 +77,7 @@ install_dependencies() {
     cd "$PROJECT_PATH"
 
     if [ -f "composer.json" ]; then
-        composer install --no-dev --optimize-autoloader
+        sudo -u www-data composer install --no-dev --optimize-autoloader
         print_status "Dependencias instaladas com sucesso!"
     else
         print_error "Arquivo composer.json não encontrado!"
@@ -132,21 +132,6 @@ restart_server() {
 
 }
 
-health_check() {
-
-    print_status "Verificando saúde da aplicação..."
-
-    # AGuarda um pouco pros serviços subierem
-    sleep 5
-
-    # Faz requisição pra aplicação pra verificar se está tudo certo
-    if curl -f -s http://localhost; then
-        print_status "Aplicação respondendo normalmente!"
-    else
-        print_error "Aplicação não está respondendo, verifique os Logs!!!"
-    fi
-}
-
 main() {
 
     print_status "=== INICIANDO DEPLOY DA APLICAÇÃO ==="
@@ -159,7 +144,6 @@ main() {
     install_dependencies
     run_laravel_commands
     restart_server
-    health_check
 
     print_status "=== DEPLOY CONCLUÍDO COM SUCESSO ==="
     print_status "LOGS SALVOS EM: $LOG_FILE"
