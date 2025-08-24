@@ -1,61 +1,189 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Books API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API REST para gerenciar livros e usuários.
 
-## About Laravel
+## Como rodar
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Requisitos
+- PHP 8.1+
+- MySQL
+- Composer
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Instalação
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+git clone <repo>
+cd projeto
+composer install
+cp .env.example .env
+php artisan key:generate
+```
 
-## Learning Laravel
+### Banco de dados
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+No `.env`:
+```
+DB_DATABASE=sua_base
+DB_USERNAME=seu_usuario
+DB_PASSWORD=sua_senha
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# Para testes
+DB_DATABASE_TESTING=sua_base_testing
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Criar os bancos:
+```sql
+CREATE DATABASE sua_base;
+CREATE DATABASE sua_base_testing;
+```
 
-## Laravel Sponsors
+Rodar migrations:
+```bash
+php artisan migrate
+php artisan migrate --env=testing
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Subir o servidor
+```bash
+php artisan serve
+```
 
-### Premium Partners
+## API
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Base: `http://localhost:8000/api`
 
-## Contributing
+Todos os endpoints precisam de autenticação (Bearer token).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Books
+- `GET /books` - Lista livros (com paginação)
+- `GET /books/{id}` - Mostra um livro
+- `POST /books` - Cria livro
+- `PUT /books/{id}` - Atualiza livro
+- `DELETE /books/{id}` - Deleta livro
 
-## Code of Conduct
+### Users  
+- `GET /users` - Lista usuários
+- `GET /users/{id}` - Mostra um usuário
+- `POST /users` - Cria usuário
+- `PUT /users/{id}` - Atualiza usuário
+- `DELETE /users/{id}` - Deleta usuário
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Paginação
+Adicione `?limit=10&page=2` nas listagens.
 
-## Security Vulnerabilities
+### Exemplo - Criar livro
+```json
+POST /api/books
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+{
+    "title": "1984",
+    "author": "George Orwell", 
+    "pages": 328,
+    "description": "Distopia clássica",
+    "published_at": "1949-06-08"
+}
+```
 
-## License
+### Exemplo - Criar usuário
+```json
+POST /api/users
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+{
+    "name": "João Silva",
+    "email": "joao@teste.com",
+    "password": "12345678"
+}
+```
+
+## Testes
+
+Rodar todos:
+```bash
+php artisan test
+```
+
+Rodar só os de integração:
+```bash
+php artisan test tests/Feature/
+```
+
+## Comando de importação
+
+```bash
+php artisan import:books
+```
+
+Para rodar de hora em hora, adicionar no cron:
+```bash
+0 * * * * php /caminho/projeto/artisan import:books
+```
+
+## Validações
+
+### Books
+- title: obrigatório, máx 255 chars
+- author: obrigatório, máx 255 chars  
+- pages: obrigatório, número positivo
+- description: opcional
+- published_at: opcional, formato data
+
+### Users
+- name: obrigatório, máx 255 chars
+- email: obrigatório, email válido, único
+- password: obrigatório, mín 8 chars
+
+## Estrutura do projeto
+
+```
+app/
+├── Http/Controllers/
+│   ├── BookController.php
+│   └── UserController.php
+├── Http/Requests/
+│   ├── BookRequest.php
+│   └── UserRequest.php
+├── Models/
+│   ├── Book.php
+│   └── User.php
+└── Console/Commands/
+    └── ImportBooksCommand.php
+
+tests/
+├── Feature/
+│   ├── BookTest.php
+│   └── UserTest.php
+└── Unit/
+    └── ...
+```
+
+## Comandos úteis
+
+```bash
+# Limpar cache
+php artisan cache:clear
+
+# Gerar factory
+php artisan make:factory BookFactory
+
+# Rollback migrations  
+php artisan migrate:rollback
+
+# Ver rotas
+php artisan route:list
+```
+
+## Deploy
+
+Para produção:
+```bash
+composer install --no-dev --optimize-autoloader
+php artisan config:cache
+php artisan route:cache
+php artisan migrate --force
+```
+
+Configurar `.env` para produção:
+```
+APP_ENV=production
+APP_DEBUG=false
+```

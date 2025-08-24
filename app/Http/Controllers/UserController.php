@@ -24,9 +24,7 @@ class UserController extends Controller
 
         $users = User::paginate($limit);
 
-        return UserResource::collection($users)
-            ->response()
-            ->setStatusCode(200);
+        return UserResource::collection($users);
     }
 
     /**
@@ -39,9 +37,7 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
         
-        return (new UserResource($user))
-            ->response()
-            ->setStatusCode(200);
+        return (new UserResource($user));
     }
 
     /**
@@ -72,9 +68,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->update($request->validated());
 
-        return (new UserResource($user))
-            ->response()
-            ->setStatusCode(200);
+        return (new UserResource($user));
     }
 
     /**

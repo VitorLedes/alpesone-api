@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BookRequest;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
+use DateTime;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -24,9 +25,7 @@ class BookController extends Controller
 
         $books = Book::paginate($limit);
 
-        return BookResource::collection($books)
-            ->response()
-            ->setStatusCode(200);
+        return BookResource::collection($books);
     }
 
     /**
@@ -39,9 +38,7 @@ class BookController extends Controller
 
         $book = Book::findOrFail($id);
 
-        return (new BookResource($book))
-            ->response()
-            ->setStatusCode(200);
+        return (new BookResource($book));
     }
 
     /**
@@ -72,10 +69,7 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $book->update($request->validated());
 
-        return (new BookResource($book))
-            ->response()
-            ->setStatusCode(200);
-
+        return (new BookResource($book));
     }
 
     /**

@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -27,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->dontReport([
             NotFoundHttpException::class,
             HttpException::class,
+            AccessDeniedHttpException::class
         ]);
         
         $exceptions->renderable(function (NotFoundHttpException $e, Request $request) {
@@ -34,6 +36,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->json([
                     'message' => 'Recurso não encontrado'
                 ], 404);
+            }
+        });
+
+        $exceptions->renderable(function (AccessDeniedHttpException $e, Request $request) {
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Acesso negado'
+                ], 403);
             }
         });
 
