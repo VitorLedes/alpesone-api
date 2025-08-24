@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 class BookController extends Controller
 {
     /**
-     * Função para obter todo os livros.
+     * Função para listar todos os livros
+     *
+     * @return void
      */
     public function index() {
 

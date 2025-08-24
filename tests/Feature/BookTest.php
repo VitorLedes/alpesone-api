@@ -9,13 +9,13 @@ use Tests\TestCase;
 class BookTest extends TestCase
 {
     // use RefreshDatabase;
-    private $url = '/api/books/test-books';
-    // private $url = '/api/books';
+    private $url = '/api/books';
 
     
     public function test_if_book_can_be_created_and_inserted_in_the_database(): void
-    {
-        $this->withoutMiddleware(Authenticate::class);
+    {   
+        $user = \App\Models\User::factory()->create();
+        $this->actingAs($user, 'sanctum');
 
         $body = [
             'title' => 'Livro de Teste',

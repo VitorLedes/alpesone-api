@@ -27,6 +27,12 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        $response = Http::get('https://hub.alpes.one/api/v1/integrator/export/1902');
+        $response = Http::post('https://hub.alpes.one/api/v1/integrator/export/1902');
+
+        $variavel = 'asdasdasd';
+        $variavel = 'asdasdasd';
+        $variavel = 'asdasdasd';
+        $variavel = 'asdasdasd';
+        $variavel = 'asdasdasd';
     }
 }
