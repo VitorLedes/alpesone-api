@@ -152,14 +152,14 @@ main() {
     print_status "=== INICIANDO DEPLOY DA APLICAÇÃO ==="
     print_status "Início em: $(date '+%Y%m%d%H%M%S')"
 
-    check_permissions()
-    set_permissions()
-    create_backup()
-    update_code()
-    install_dependencies()
-    run_laravel_commands()
-    restart_server()
-    health_check()
+    check_permissions
+    set_permissions
+    create_backup
+    update_code
+    install_dependencies
+    run_laravel_commands
+    restart_server
+    health_check
 
     print_status "=== DEPLOY CONCLUÍDO COM SUCESSO ==="
     print_status "LOGS SALVOS EM: $LOG_FILE"
