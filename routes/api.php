@@ -31,5 +31,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     });
 
-    
+});
+
+Route::get('rota-teste-2', function () {
+    return response()->json([
+        'message' => 'oi'
+    ]);
 });
