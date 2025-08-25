@@ -12,21 +12,21 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # Sem cor
 
 log() {
-    echo -e "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> $LOG_FILE
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> $LOG_FILE
 }
 
 print_status() {
-    echo -e "${GREEN}[INFO]${NC} - $1"
+    echo "${GREEN}[INFO]${NC} - $1"
     log "[INFO] - $1"
 }
 
 print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} - $1"
+    echo "${YELLOW}[WARNING]${NC} - $1"
     log "[WARNING] - $1"
 }
 
 print_error() {
-    echo -e "${RED}[ERROR]${NC} - $1"
+    echo "${RED}[ERROR]${NC} - $1"
     log "[ERROR] - $1"
 }
 
@@ -113,13 +113,8 @@ run_laravel_commands() {
     php artisan view:clear
     php artisan route:clear
 
-    print_warning "Deseja executar as migrations? (y/N)"
-    read -r run_migrations
-
-    if [ "$run_migrations" = "y" ]; then
-        php artisan migrate --force
-        print_status "Migrations executadas"
-    fi
+    php artisan migrate --force
+    print_status "Migrations executadas"
 
     print_status "Comandos do Laravel executados com sucesso!"
 }
