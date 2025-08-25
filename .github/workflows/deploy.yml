@@ -1,0 +1,27 @@
+name: Deploy para o servidor
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Copiar arquivos para o servidor
+        run: |
+          rsync -avz --exclude=".git" ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/alpesone-api
+
+      - name: Executar deploy.sh no servidor
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /var/www/alpesone-api && chmod +x deploy.sh && ./deploy.sh"
