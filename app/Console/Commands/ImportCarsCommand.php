@@ -28,20 +28,20 @@ class ImportCarsCommand extends Command
      */
     public function handle()
     {
-        $this->info('[IMPORT] Iniciando command de importação de carros...');
+        Log::info('[IMPORT] Iniciando command de importação de carros...');
 
         // Timeout adicionado pq caso a API demore muito, ele não fique travado!
         $response = Http::timeout(30)->get('https://hub.alpes.one/api/v1/integrator/export/1902');
 
         if ($response->failed()) {
-            $this->error('[IMPORT] Falha ao buscar dados do JSON.');
+            Log::error('[IMPORT] Falha ao buscar dados do JSON.');
             return 1;
         }
 
         $carsData = $response->json();
 
         if (empty($carsData)) {
-            $this->warning('[IMPORT] Nenhum dado encontrado no JSON.');
+            Log::warning('[IMPORT] Nenhum dado encontrado no JSON.');
             return 0;
         }
 
@@ -65,10 +65,10 @@ class ImportCarsCommand extends Command
 
         }
 
-        $this->info('[IMPORT] Command de importação de carros finalizado!');
-        $this->info('[IMPORT] Quantidade de carros importados: ' . $imported);
-        $this->info('[IMPORT] Quantidade de carros atualizados: ' . $updated);
-        $this->info('[IMPORT] Quantidade de carros que deram erro: ' . $errors);
+        Log::info('[IMPORT] Command de importação de carros finalizado!');
+        Log::info('[IMPORT] Quantidade de carros importados: ' . $imported);
+        Log::info('[IMPORT] Quantidade de carros atualizados: ' . $updated);
+        Log::info('[IMPORT] Quantidade de carros que deram erro: ' . $errors);
 
     }
     
