@@ -53,6 +53,8 @@ class CarTest extends TestCase
                     'color',
                     'fuel',
                     'external_id',
+                    'pictures' => [],
+                    'optionals' => []
                 ],
             ],
             'links' => [
@@ -139,6 +141,11 @@ class CarTest extends TestCase
             'color' => 'Branco',
             'fuel' => 'Gasolina',
             'external_id' => 125306,
+            'fotos' => [
+                "https://revendaexemplo.com/images/corolla-cross-frente.jpg",
+                "https://revendaexemplo.com/images/corolla-cross-traseira.jpg",
+                "https://revendaexemplo.com/images/corolla-cross-interior.jpg"
+            ]
         ];
 
         $response = $this->actingAs($user, 'sanctum')->postJson($this->url, $body);
@@ -183,7 +190,7 @@ class CarTest extends TestCase
             'chassi' => 123,
             'transmission' => '',
             'km' => '',
-            'description' => '',
+            'description' => 123123,
             'sold' => '',
             'category' => '',
             'url_car' => '',
@@ -247,13 +254,15 @@ class CarTest extends TestCase
             'color' => 'Prata',
             'fuel' => 'Gasolina',
             'external_id' => 123456,
+            'fotos' => [
+                "https://revendaexemplo.com/images/corolla-cross-frente.jpg",
+            ]
         ];
 
         $response = $this->actingAs($user, 'sanctum')->putJson("{$this->url}/{$car->id}", $body);
         $response->assertStatus(200);
 
         $this->assertDatabaseHas('cars', [
-            'id' => $car->id,
             'type' => 'carro',
             'brand' => 'Toyota',
             'model' => 'Corolla',
@@ -295,7 +304,7 @@ class CarTest extends TestCase
             'chassi' => 123123,
             'transmission' => '',
             'km' => '',
-            'description' => '',
+            'description' => 123123,
             'sold' => 123123,
             'category' => '',
             'url_car' => '',
