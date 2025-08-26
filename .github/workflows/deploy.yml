@@ -27,4 +27,4 @@ jobs:
 
       - name: Executar deploy.sh no servidor
         run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /var/www/alpesone-api && chmod +x deploy.sh && sudo ./deploy.sh"
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "cd /var/www/alpesone-api && sudo chmod +x deploy.sh && sudo ./deploy.sh"
