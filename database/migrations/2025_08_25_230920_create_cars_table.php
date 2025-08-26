@@ -17,14 +17,14 @@ return new class extends Migration
             $table->string('brand');
             $table->string('model');
             $table->string('version');
-            $table->string('model');
-            $table->string('build');
+            $table->string('model_year');
+            $table->string('build_year');
             $table->integer('doors');
             $table->string('board');
-            $table->string('chassi');
+            $table->string('chassi')->nullable();
             $table->string('transmission');
             $table->string('km');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('sold');
             $table->string('category');
             $table->string('url_car');
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('color');
             $table->string('fuel');
+            $table->unsignedBigInteger('external_id')->unique();
             $table->timestamps();
         });
     }

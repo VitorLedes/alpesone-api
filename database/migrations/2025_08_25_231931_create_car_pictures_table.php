@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('car_pictures', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('car_id')->references('id')->on('cars');
+            $table->foreignId('car_id')->references('id')->on('cars')->onDelete('cascade');
             $table->text('pic_url');
             $table->timestamps();
         });

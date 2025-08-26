@@ -14,9 +14,9 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function index() {
+    public function index(Request $request) {
 
-        $limit = (int) request()->get('limit') ?? 10;
+        $limit = (int) $request->limit ?? 10;
 
         if ($limit > 100 || $limit < 1) {
             $limit = 10;
