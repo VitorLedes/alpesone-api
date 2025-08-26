@@ -36,7 +36,6 @@ class ImportCarsCommandTest extends TestCase
             ],
             'doors' => 4,
             'board' => 'ABC-1234',
-            'chassi' => '12345678901234567',
             'transmission' => 'Manual',
             'km' => '50000',
             'description' => 'Carro em ótimo estado',
@@ -67,7 +66,6 @@ class ImportCarsCommandTest extends TestCase
             'build_year' => '2019',
             'doors' => 4,
             'board' => 'ABC-1234',
-            'chassi' => '',
             'transmission' => 'Manual',
             'km' => '50000',
             'description' => 'Carro em ótimo estado',
@@ -78,7 +76,8 @@ class ImportCarsCommandTest extends TestCase
             'price' => '55000',
             'color' => 'Prata',
             'fuel' => 'Flex',
-            'fotos' => ['https://alpes-hub.s3.amazonaws.com/uploads/public/680/7c8/4e8/6807c84e83e49541662900.jpeg']
+            'fotos' => ['https://alpes-hub.s3.amazonaws.com/uploads/public/680/7c8/4e8/6807c84e83e49541662900.jpeg'],
+            'chassi' => null,
         ];
 
         $this->assertEquals($expected, $result);
@@ -93,11 +92,11 @@ class ImportCarsCommandTest extends TestCase
             'brand' => 'Toyota',
             'model' => 'Corolla',
             'version' => '2.0 XEi',
-            'year' => ['model' => 2020, 'build' => 2019],
+            'year' => ['model' => '2020', 'build' => '2019'],
             'doors' => 4,
             'board' => 'ABC-1234',
             'transmission' => 'Manual',
-            'km' => 50000,
+            'km' => '50000',
             'description' => 'Carro em ótimo estado',
             'sold' => '123',
             'category' => 'Sedan',
