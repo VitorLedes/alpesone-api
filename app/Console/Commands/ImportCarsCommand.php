@@ -77,7 +77,10 @@ class ImportCarsCommand extends Command
         // Criar corpo pra validação
         $bodyToValidate = $this->createBodyForValidation($carData);
 
-        $validatedData = Validator::make($bodyToValidate, (new CarRequest)->rules())->validate();
+        $request = new CarRequest();
+        $request->setFromCommand(true);
+
+        $validatedData = Validator::make($bodyToValidate, $request->rules())->validate();
 
         // Verificar se o carro já existe
         $car = Car::where('external_id', $carData['id'])->first();
