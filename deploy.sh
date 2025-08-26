@@ -3,9 +3,6 @@ GITHUB_REPOSITORY="https://github.com/VitorLedes/alpesone-api"
 BACKUP_PATH="/var/backup/alpesone-api"
 LOG_FILE="/var/log/alpesone-api/deploy.log"
 
-# Criando o arquivo de logs (esse 2>/dev/null é pra não exibir nenhuma mensagem)
-mkdir -p "$(dirname "$LOG_FILE")" 2>/dev/null
-
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
