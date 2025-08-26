@@ -37,7 +37,7 @@ class CarFactory extends Factory
             'price' => '115900.00',
             'color' => 'Branco',
             'fuel' => 'Gasolina',
-            'external_id' => 125306,
+            'external_id' => $this->faker->unique()->numberBetween(100000, 999999),
         ];
     }
 }
