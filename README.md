@@ -56,11 +56,11 @@ Base: `http://localhost:8000/api`
 Todos os endpoints precisam de autenticação (Bearer token).
 
 ### Cars
-- `GET /cars` - Lista livros (com paginação)
-- `GET /cars/{id}` - Mostra um livro
-- `POST /cars` - Cria livro
-- `PUT /cars/{id}` - Atualiza livro
-- `DELETE /cars/{id}` - Deleta livro
+- `GET /cars` - Lista carros (com paginação)
+- `GET /cars/{id}` - Mostra um carros
+- `POST /cars` - Cria carros
+- `PUT /cars/{id}` - Atualiza carros
+- `DELETE /cars/{id}` - Deleta carros
 
 ### Users  
 - `GET /users` - Lista usuários
